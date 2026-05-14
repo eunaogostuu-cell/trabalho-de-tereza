@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>BeLingue</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <style>:root {
+    --bg-color: #D8BFD8;       
+    --nav-bg: #7B528D;        
+    --card-white: #ffffff;
+    --text-color: #351f42;      
+    --nav-text: #ffffff;
+    --btn-bg: #4B2C5E;        
+    --card-purple: #7B528D;
+}
+
+body.dark-theme {
+    --bg-color: #1a1a1a;
+    --nav-bg: #331a3d;
+    --card-white: #2d2d2d;
+    --text-color: #e0e0e0;
+    --nav-text: #dfc5fe;
+    --btn-bg: #5a357a;
+    --card-purple: #4B2C5E;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+p, h2 {
+  font-family: "Playfair Display", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding-top: 80px; 
+    transition: background 0.3s, color 0.3s;
+}
+
+.navbar {
+    background-color: var(--nav-bg);
+    color: var(--nav-text);
+    padding: 15px 50px;
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.nav-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.logo {
+    font-weight: bold;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.logo .detail { border-bottom: 2px solid white; }
+
+.nav-btn {
+    background-color: var(--btn-bg);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.nav-btn:hover { background-color: #351f42; }
+
+.lang-selector {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dark-mode-btn {
+    background: var(--btn-bg);
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+
+.persona-card {
+    background-color: var(--card-white);
+    width: 350px;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.cta-container {
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cta-text {
+    font-size: 2.2rem;
+    color: var(--text-color);
+    line-height: 1.2;
+    font-style: italic;
+}
+
+.cta-button {
+    background-color: var(--nav-bg);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    align-self: center;
+    transition: all 0.3s ease;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+}
+
+.info-section {
+    padding: 100px 20px;
+    display: flex;
+    justify-content: center;
+    min-height: 80vh;
+}
+
+.cards-container {
+    display: flex;
+    gap: 50px;
+    max-width: 1000px;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.info-card {
+    width: 400px;
+    height: min-height;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+    transition: all 0.4s ease;
+    overflow: hidden;
+    position: relative;
+}
+
+
+.persona-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.info-card h2 { font-size: 1.8rem; font-weight: 500; transition: 0.3s; }
+
+.info-card p {
+    font-size: 0px;
+    opacity: 0;
+    transition: 0.4s ease;
+}
+
+.info-card:not(.persona-v2):not(.persona-card):hover {
+    transform: translateY(-10px);
+}
+
+.info-card:not(.persona-v2):not(.persona-card):hover h2 {
+    font-size: 0;
+    opacity: 0;
+}
+
+.info-card:not(.persona-v2):not(.persona-card):hover p {
+    font-size: 1.2rem;
+    opacity: 1;
+}
+
+.education, .methods-card, .history-card, .conclusion-card {
+    background-color: var(--card-purple);
+    color: white;
+    border: 2px solid white;
+}
+
+.persona-v2 {
+    background-color: var(--card-white);
+    padding: 0; /* Remove padding para a imagem encostar nas bordas */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.single-card-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.how-it-works { padding: 50px 0; }
+
+.how-it-works h2 {
+    color: var(--text-color);
+    margin-bottom: 40px;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.steps {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 0;
+    flex-wrap: wrap;
+}
+
+.step {
+    background: var(--nav-bg);
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 250px;      
+    font-size: 1.2rem; 
+    font-weight: 500;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
+
+/* MUDANÇA: Zoom, Sombra maior e escurecimento no hover */
+.step:hover {
+    transform: scale(1.1);
+    filter: brightness(0.85);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.features {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 80px 50px;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.feature-item {
+    background: var(--card-white);
+    padding: 30px;
+    border-radius: 15px;
+    flex: 1;
+    min-width: 250px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.footer {
+    background-color: var(--btn-bg);
+    color: white;
+    padding: 40px 20px;
+    text-align: center;
+    margin-top: auto;
+}
+
+@media (max-width: 850px) {
+    .navbar { padding: 15px 20px; }
+    .nav-controls { gap: 10px; }
+    .cards-container, .features, .steps { flex-direction: column; align-items: center; }
+    .info-card, .step { width: 90%; }
+    .cta-text { font-size: 1.6rem; }
+}
+</style>
+    <body>
+        <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+        
+        <script src="" async defer></script>
+    </body>
+</html>
+<header class="navbar">
+    <div class="logo">BE<span class="detail">L</span>INGUE</div>
+    
+    <div class="nav-center">
+        <button class="nav-btn" id="btnComece" data-i18n="btn-comece">COMECE AQUI</button>
+    </div>
+
+    <div class="nav-controls">
+        <div class="lang-selector" id="langToggle">
+            <span data-i18n="lang-text">IDIOMA DO SITE: PORTUGUÊS</span>
+        </div>
+        <button id="darkModeToggle" class="dark-mode-btn">🌙</button>
+    </div>
+</header>
+
+<main class="hero">
+    <div class="persona-card">
+        <img src="https://i.postimg.cc/L6KKytDc/a333fb90-fdd6-435e-890e-77bd1533c0fb.jpg" alt="Persona" class="persona-img">
+    </div>
+    <div class="cta-container">
+        <h1 class="cta-text" data-i18n="cta-main">“Do 'Oi' ao 'Hello' em um clique. Seja BeLingue e domine novos idiomas.”</h1>
+        <button class="cta-button" id="ctaTrigger" data-i18n="btn-comece">COMECE AQUI</button>
+    </div>
+</main>
+
+<section class="info-section">
+    <div class="cards-container">
+        <div class="info-card education">
+            <div class="card-content">
+                <h2 data-i18n="card-edu">Informações sobre a Educação</h2>
+                <p>O aprendizado bilíngue melhora o foco e abre portas para o mundo.</p>
+            </div>
+        </div>
+        <div class="info-card persona-v2">
+            <img src="https://i.postimg.cc/Sxn6J9F9/62acb6de-016b-4c31-99d2-5e3a83c5c9f1.jpg" alt="Persona" class="persona-img">
+        </div>
+    </div>
+</section>
+
+<section class="info-section section-methods">
+    <div class="cards-container">
+        <div class="info-card persona-v2">
+            <img src="https://i.postimg.cc/hPgZzpp7/1840a461-8276-4e3a-8afa-014081e01b19.jpg" alt="Persona" class="persona-img">
+        </div>
+        <div class="info-card methods-card">
+            <div class="card-content">
+                <h2 data-i18n="card-methods">Informações sobre os metodos</h2>
+                <p>Método de ensino: Eu o ensinarei da maneira que considerar mais adequada. Caso cometa algum erro ou tenha dificuldade em compreender algo, não se preocupe, certamente terei uma resposta bastante “especial” preparada especialmente para você. Afinal, como um bom mago, considero meu dever garantir que a lição seja devidamente aprendida.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="info-section">
+    <div class="cards-container">
+        <div class="info-card history-card">
+            <div class="card-content">
+                <h2 data-i18n="card-history">História da Persona</h2>
+                <p>Eu sou um mago que, por algum motivo bastante peculiar, aprecia ensinar. No entanto, só compartilho meus conhecimentos com aqueles que considero dignos de aprendê-los. Felizmente para você, minhas lições concentram-se em duas áreas nobres: português e inglês. Que sorte a sua, não é mesmo? Peço apenas sua compreensão caso, em alguns momentos, eu pareça um pouco rígido. Afinal, até mesmo um mago dedicado precisa manter certa disciplina ao orientar seus aprendizes.</p>
+            </div>
+        </div>
+        <div class="info-card persona-v2">
+            <img src="https://i.postimg.cc/cCQsDXny/a0e0f541-dec5-48f4-bac4-98f874a7995c.jpg" alt="Persona" class="persona-img">
+        </div>
+    </div>
+</section>
+
+<section class="info-section final-section">
+    <div class="single-card-container">
+        <div class="info-card conclusion-card">
+            <div class="card-content">
+                <h2 data-i18n="card-conclusion">Conclusão</h2>
+                <p>Ser bilíngue não é apenas falar, é viver novas oportunidades.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works">
+    <h2 data-i18n="how-title" style="text-align: center; padding-bottom: 20px;">Como funciona?</h2>
+    <div class="steps">
+        <div class="step" data-i18n="step-1">1. Escolha seu idioma</div>
+        <div class="step" data-i18n="step-2">2. Defina sua meta</div>
+        <div class="step" data-i18n="step-3">3. Comece a falar</div>
+    </div>
+</section>
+
+<section class="features" id="recursos">
+    <div class="feature-item">
+        <h3 data-i18n="feat-title-1">Conversação ao vivo</h3>
+        <p data-i18n="feat-desc-1">Pratique conversas de texto com o Kira.</p>
+    </div>
+    <div class="feature-item">
+        <h3 data-i18n="feat-title-2">Regras e uso</h3>
+        <p data-i18n="feat-desc-2">Acesse regras e usos na linguística.</p>
+    </div>
+    <div class="feature-item">
+        <h3 data-i18n="flex-title">Flexibilidade</h3>
+        <p data-i18n="flex-desc">Estude onde e quando quiser, no seu próprio ritmo.</p>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2026 BeLingue - <span data-i18n="rights">Todos os direitos reservados.</span></p>
+        <div class="social-links">
+            <a href="#" style="color: white;">Instagram</a> | <a href="#" style="color: white;">LinkedIn</a>
+        </div>
+    </div>
+<section id="chat-kira" style="width: 100%; display: flex; flex-direction: column; align-items: center; padding: 40px 0; background-color: var(--bg-color);">
+    <h2 style="margin-bottom: 20px; color: var(--text-color); font-family: 'Playfair Display', serif;">Fale com o qira</h2>
+    
+    <div style="width: 90%; max-width: 1000px; height: 700px; overflow: hidden; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 2px solid var(--nav-bg);">
+        <iframe
+          src="https://typebot.co/qira"
+          style="width: 100%; height: 100%; border: none; display: block;"
+          allow="fullscreen"
+        ></iframe>
+    </div>
+</section>
+</footer>
+<script>document.addEventListener('DOMContentLoaded', () => {
+    
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const langToggle = document.getElementById('langToggle');
+    const btnComece = document.getElementById('btnComece');
+    const ctaTrigger = document.getElementById('ctaTrigger');
+
+    if (localStorage.getItem('theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        darkModeToggle.textContent = '☀️';
+    }
+
+    darkModeToggle.addEventListener('click', () => {
+        document.body.classList.toggle('dark-theme');
+        if (document.body.classList.contains('dark-theme')) {
+            darkModeToggle.textContent = '☀️';
+            localStorage.setItem('theme', 'dark');
+        } else {
+            darkModeToggle.textContent = '🌙';
+            localStorage.setItem('theme', 'light');
+        }
+    });
+
+    const translations = {
+        pt: {
+            "btn-comece": "COMECE AQUI",
+            "lang-text": "IDIOMA DO SITE: PORTUGUÊS",
+            "cta-main": "“Do 'Oi' ao 'Hello' em um clique. Seja BeLingue e domine novos idiomas.”",
+            "card-edu": "Informações Sobre a Educação",
+            "card-methods": "informacoes sobre os metodos",
+            "card-history": "História Da Persona",
+            "card-conclusion": "Conclusão",
+            "rights": "Todos os direitos reservados.",
+            "how-title": "Como funciona?",
+            "step-1": "1. Escolha seu idioma",
+            "step-2": "2. Defina sua meta",
+            "step-3": "3. Comece a falar"
+        },
+        en: {
+            "btn-comece": "START HERE",
+            "lang-text": "SITE LANGUAGE: ENGLISH",
+            "cta-main": "“From 'Hi' to 'Hello' in one click. Be BeLingue and master new languages.”",
+            "card-edu": "Information About Education",
+            "card-methods": "information about methods",
+            "card-history": "Persona's History",
+            "card-conclusion": "Conclusion",
+            "rights": "All rights reserved.",
+            "how-title": "How it works?",
+            "step-1": "1. Choose your language",
+            "step-2": "2. Set your goal",
+            "step-3": "3. Start speaking"
+        }
+    };
+
+    let currentLang = 'pt';
+
+    langToggle.addEventListener('click', () => {
+        currentLang = currentLang === 'pt' ? 'en' : 'pt';
+        
+        document.querySelectorAll('[data-i18n]').forEach(element => {
+            const key = element.getAttribute('data-i18n');
+            if (translations[currentLang][key]) {
+                element.textContent = translations[currentLang][key];
+            }
+        });
+    });
+
+ // Redireciona ao clicar no botão "Comece"
+    if (btnComece) {
+        btnComece.addEventListener('click', () => {
+            window.location.href = 'https://typebot.co/qira';
+        });
+    }
+    if (ctaTrigger) {
+        ctaTrigger.addEventListener('click', () => {
+            window.location.href = 'https://typebot.co/qira';
+        });
+    }
+});</script>
+</body>
+</html>
